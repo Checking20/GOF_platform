@@ -1,0 +1,1 @@
+这个需要安装django，django-restframe,postgre数据库的驱动
