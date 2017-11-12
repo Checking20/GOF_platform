@@ -44,8 +44,23 @@ function outPut() {
     }
     return numAns;
 }
+var timeId;
+document.getElementById('evolve').onclick=function (e) {
+    if(e.target.innerText=='演变'){
+        timeId=setInterval('evolve()',300);
+        document.getElementById('evolve').innerText='暂停';
+    }else {
+        clearInterval(timeId);
+        document.getElementById('evolve').innerText='演变'
+    }
 
-document.getElementById('evolve').onclick=function () {
+}
+
+
+
+
+
+function evolve() {
     var selected=document.querySelectorAll('li');
 
     for(var i=0;i<selected.length;i++){
@@ -61,7 +76,7 @@ document.getElementById('evolve').onclick=function () {
                 if(a<0||b<0||a>9||b>9){
                     continue;
                 }
-                    console.log(a*cols+b);
+                    // console.log(a*cols+b);
                 if(selected[a*cols+b].className=='selected'){
                     num++;
                 }
@@ -69,7 +84,7 @@ document.getElementById('evolve').onclick=function () {
             }
         }
 
-        console.log('block'+' '+i);
+        // console.log('block'+' '+i);
 
 
         switch (num){
@@ -88,6 +103,8 @@ document.getElementById('evolve').onclick=function () {
     }
     paint();
 }
+
+
 function paint() {
     var selected=document.querySelectorAll('li');
     for(var i=0;i<paintArr.length;i++){
