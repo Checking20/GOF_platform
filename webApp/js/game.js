@@ -1,12 +1,11 @@
 
 
-var rows=10;
-var cols=10;
+var rows=20;
+var cols=20;
 var paintArr=[];
 init();
 
 function init() {
-
     var num=0;
     var game=document.getElementById('game');
     var div;
@@ -47,7 +46,7 @@ function outPut() {
 var timeId;
 document.getElementById('evolve').onclick=function (e) {
     if(e.target.innerText=='演变'){
-        timeId=setInterval('evolve()',300);
+        timeId=setInterval('evolve()',500);
         document.getElementById('evolve').innerText='暂停';
     }else {
         clearInterval(timeId);
@@ -73,7 +72,7 @@ function evolve() {
                 if(a==iCol&&b==iRow){
                     continue;
                 }
-                if(a<0||b<0||a>9||b>9){
+                if(a<0||b<0||a>cols-1||b>rows-1){
                     continue;
                 }
                     // console.log(a*cols+b);
