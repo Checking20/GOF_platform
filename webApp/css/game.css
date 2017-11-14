@@ -31,3 +31,11 @@
     margin:0 auto;
     display: block;
 }
+#range{
+    width: 200px;
+    margin: 10px auto 0 ;
+    display: block;
+}
+#text{
+    text-align: center;
+}

@@ -2,10 +2,11 @@
 
 var rows=20;
 var cols=20;
-var paintArr=[];
+
 init();
 
 function init() {
+    document.getElementById('text').innerText='速度: '+document.getElementById('range').value+'ms';
     var num=0;
     var game=document.getElementById('game');
     var div;
@@ -30,11 +31,9 @@ document.getElementById('game').onclick=function (e) {
         }else {
             e.target.className='';
         }
-
-
     }
-
 }
+
 function outPut() {
     var selected=document.querySelectorAll('.selected');
     var numAns=[];
@@ -43,10 +42,12 @@ function outPut() {
     }
     return numAns;
 }
+
 var timeId;
+
 document.getElementById('evolve').onclick=function (e) {
     if(e.target.innerText=='演变'){
-        timeId=setInterval('evolve()',500);
+        timeId=setInterval('evolve()',document.getElementById('range').value);
         document.getElementById('evolve').innerText='暂停';
     }else {
         clearInterval(timeId);
@@ -54,12 +55,17 @@ document.getElementById('evolve').onclick=function (e) {
     }
 
 }
-
+document.getElementById('range').oninput=function () {
+    document.getElementById('text').innerText='速度: '+document.getElementById('range').value+'ms';
+    clearInterval(timeId);
+    timeId=setInterval('evolve()',document.getElementById('range').value);
+}
 
 
 
 
 function evolve() {
+    var paintArr=[];
     var selected=document.querySelectorAll('li');
 
     for(var i=0;i<selected.length;i++){
@@ -82,10 +88,7 @@ function evolve() {
 
             }
         }
-
         // console.log('block'+' '+i);
-
-
         switch (num){
             case 2:
                 paintArr[i]=2;
@@ -100,16 +103,15 @@ function evolve() {
 
 
     }
-    paint();
+    paint(paintArr);
 }
 
-
-function paint() {
+function paint(arr) {
     var selected=document.querySelectorAll('li');
-    for(var i=0;i<paintArr.length;i++){
-        if(paintArr[i]==0){
+    for(var i=0;i<arr.length;i++){
+        if(arr[i]==0){
             selected[i].className='';
-        }else if(paintArr[i]==1){
+        }else if(arr[i]==1){
             selected[i].className='selected';
         }
     }
