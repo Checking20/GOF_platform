@@ -24,6 +24,10 @@
                    //加载作品页面逻辑
                    user.name = myData.data.name;
                    user.avatar = myData.data.avatar;
+                   work.like = myData.data.like;
+                   work.visitors = myData.data.visitors;
+                   work.intro = myData.data.intro;
+                   
                 },
                 error: function (xhr, type) {
                     console.log(type);
@@ -62,7 +66,7 @@
             $.ajax({
                 type: "POST",
                 url: "/addComment",
-                data: { "comment":comment,"uesrNmae":user.name },
+                data: { "comment":comment,"uesrName":user.name },
                 dataType: 'json',
                 success: function (myData) {
                    if(myData.data.flag){
@@ -78,16 +82,50 @@
             this.comments.forEach(function(item,index,comments){
                 var item = document.createElement("div");
                 item.className = "item";
-
+                //user部分
                 var user = document.createElement("div"); 
                 user.className = "user";
+
                 var avatar = document.createElement("div");
                 avatar.className = "avatar";
+
+                var img = document.createElement("img");
+                img.src = item.avatar;
+                avatar.appendChild(img);
+
                 var uesr_name = document.createElement("div");
                 uesr_name.className = "uesr_name";
-                
+                uesr_name.innerHTML = item.uesrName;
+                user.appendChild(avatar);
+                user.appendChild(uesr_name);
+
+                //content部分
+                var content = document.createElement("div"); 
+                content.className = "content";
+
+                var space = document.createElement("div"); 
+                space.className = "space";
+                var comment_content = document.createElement("div"); 
+                comment_content.className =" comment_content";
+                comment_content.innerHTML = item.comment;//??
+                content.appendChild(space);
+                content.appendChild(comment_content);
+
+                //divide部分
+                var divide = document.createElement("div");
+                divide.className = "divide";
+
+                //将各部分加入到item中构成一条评论
+                item.appendChild(user);
+                item.appendChild(content);
+                item.appendChild(divide);
+
+                //将评论加入到列表中
+                $("comment>.left").append(item);
             })
         }, 
-        share, //分享作品
+        share:function(){
+            alert("分析作品");
+        }, //分享作品
     };
 }.call(this));
