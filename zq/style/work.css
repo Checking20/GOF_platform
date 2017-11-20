@@ -1,3 +1,11 @@
+html,body{
+    margin: 0;
+    padding: 0;
+    background-image: url(../images/decorate.png);
+    background-repeat:no-repeat;
+    background-size: 100% 100%;
+    /* background-color: #eee;  */
+}
 .main{
     width: 70%;
     margin: 0 auto;
