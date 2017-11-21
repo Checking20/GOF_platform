@@ -1,6 +1,6 @@
 /**
  * author:zq
- * time:2017/11/20
+ * time:2017/11/21
  * 加载当前展示作品
  * 加载作品所属用户信息
  * 加载当前作品所有的评论
@@ -28,6 +28,8 @@
                    work.visitors = myData.data.visitors;
                    work.intro = myData.data.intro;
                    
+                   manager.getComments(manager.mapId);
+
                 },
                 error: function (xhr, type) {
                     console.log(type);
@@ -41,7 +43,9 @@
                 data: { "mapId":mapId },
                 dataType: 'json',
                 success: function (myData) {
-                   work.comments = myData.data.comments;//数组不能直接赋值
+                   work.comments = myData.data.comments.slice();//数组不能直接赋值
+
+                   work.renderComments(work.comments); //渲染评论
                 },
                 error: function (xhr, type) {
                     console.log(type);
@@ -128,4 +132,7 @@
             alert("分析作品");
         }, //分享作品
     };
+
+
+    manager.init(common.workInterfaceMapId); //初始化
 }.call(this));

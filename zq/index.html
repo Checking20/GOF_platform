@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Game Life</title>
-    <link rel="stylesheet" href="style/main.css">
+    <link rel="stylesheet" href="style/index.css">
 </head>
 <body>
     <div class="main">
-        <div class="works" onClick="location.href='./share.html'">
+        <div class="works">
             <span>Works</span>
             <div class="button_icon"><img src="./images/button1.png"></div>
         </div>
@@ -18,6 +18,21 @@
             <div class="button_icon"><img src="./images/button1.png"></div>
         </div>
     </div>
-    <script src="js/main.js"></script>
+    <div class="loginButton">登录</div>
+    <div class="login_register">
+        <div class="brand">Game Life</div>
+        <div class="userName"><div class="text"><img src="./images/user.png"></div ><input class="username" placeholder="用户名" type="text"></div>
+        <div class="password"><div class="text"><img src="./images/lock.png"></div ><input class="password" placeholder="密码" type="text"></div>
+        <div class="lr_button">
+            <div class="login">登录</div>
+            <div class="or">or</div>
+            <div class="register">注册</div>
+        </div>
+    </div>
+
+    <div class="bg"></div>
+    <script src="./js/jquery-3.1.1.min.js"></script>
+    <script src="./js/common.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>
