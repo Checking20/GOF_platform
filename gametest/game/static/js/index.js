@@ -34,16 +34,18 @@
         if(manager.isLogin){
             login_register.css("display","none");        
             bgDiv.css("display","none");
-            loginButton.html(userName);
+            loginButton.html(username);
             common.username = username; //记录用户名
         }
     });
     register.click(function(){
         manager.register(username,password);
+        console.log(username);
+        console.log(password);
         if(manager.register){
             login_register.css("display","none");        
             bgDiv.css("display","none");
-            loginButton.html(userName); 
+            loginButton.html(username);
             common.username = username; //记录用户名
         }
     });
@@ -78,8 +80,8 @@
                 dataType: 'json',
 //                async:false, //同步请求
                 success: function (myData) {
-                    manager.isLog = myData.data.flag;
-                    if (manager.isLog) {
+                    manager.isLogin = myData.data.flag;
+                    if (manager.isLogin) {
                         alert("登录成功");
                     } else {
                         alert("账号或密码不对")
@@ -93,7 +95,7 @@
         register: function (username, password) {
             $.ajax({
                 type: "POST",
-                url: "/register",
+                url: "/register/",
                 data: { "username": username, "password": password },
                 dataType: 'json',
                 async:false, //同步请求
@@ -101,6 +103,7 @@
                     if (myData.data.flag) {
                         alert("注册成功");
                     }
+
                 },
                 error: function (xhr, type) {
                     console.log(type);

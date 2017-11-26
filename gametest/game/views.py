@@ -1,46 +1,41 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from . import models
+import json
+
 # Create your views here.
 # 登录
 def index(request):
     return render(request, "index.html")
 
-def login_page(request):
-    return render(request, "login.html")
-
-def test(request):
-    return HttpResponse("hello")
-
+@csrf_exempt
 def login(request):
-    if request.method == "GET":
-        username = request.GET.get("username", None)
-        password = request.GET.get("password", None)
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         try:
            user = models.GUser.objects.get(User_name=username, Password=password)
-           if user:
-               str = "{'flag': True,'Data':{'user': user}}"
-               return HttpResponse(str)
+           if user != None:
+               return HttpResponse(json.dumps({'data': {'flag': True, 'user': user}}))
            else:
-               str = "{'flag': False}"
-               return HttpResponse(str)
+               return HttpResponse(json.dumps({'data': {'flag': False}}))
         except:
-            return HttpResponse("{'flag': False}")
+            return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 # 注册新用户
-def register_page(request):
-    return render(request, "login.html")
 
+@csrf_exempt
 def register(request):
     if request.method == "POST":
-        username = request.POST.get("username", None)
-        password = request.POST.get("password", None)
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         try:
            models.GUser.objects.create(User_name=username, Password=password)
            # 插入新的用户数据
-           return render(request, "index.html", {"flag": True})
+           return HttpResponse(json.dumps({'data': {'flag': True}}))
         except:
-           return render(request, "index.html", {"flag": False})
+           return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 
 
