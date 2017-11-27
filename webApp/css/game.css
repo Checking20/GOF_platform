@@ -28,7 +28,17 @@
 
 #evolve{
     width: 100px;
-    margin:0 auto;
+    margin:20px auto;
+    display: block;
+}
+#upload{
+    width: 100px;
+    margin:20px auto;
+    display: block;
+}
+#get{
+    width: 100px;
+    margin:20px auto;
     display: block;
 }
 #range{

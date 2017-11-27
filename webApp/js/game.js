@@ -2,7 +2,7 @@
 
 var rows=20;
 var cols=20;
-
+var paintArr=[];
 init();
 
 function init() {
@@ -65,7 +65,7 @@ document.getElementById('range').oninput=function () {
 
 
 function evolve() {
-    var paintArr=[];
+
     var selected=document.querySelectorAll('li');
 
     for(var i=0;i<selected.length;i++){
