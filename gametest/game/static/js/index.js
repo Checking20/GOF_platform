@@ -78,8 +78,10 @@
                 url: "/login/",
                 data: { "username": username, "password": password },
                 dataType: 'json',
-//                async:false, //同步请求
+                //async:false, //同步请求
                 success: function (myData) {
+                    console.log(myData.data);
+                    alert(myData.data.flag);
                     manager.isLogin = myData.data.flag;
                     if (manager.isLogin) {
                         alert("登录成功");

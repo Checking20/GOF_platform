@@ -15,13 +15,11 @@ def login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         try:
-           user = models.GUser.objects.get(User_name=username, Password=password)
-           if user != None:
-               return HttpResponse(json.dumps({'data': {'flag': True, 'user': user}}))
-           else:
-               return HttpResponse(json.dumps({'data': {'flag': False}}))
+           models.GUser.objects.filter(User_name=username, Password=password)
+           # 插入新的用户数据
+           return HttpResponse(json.dumps({'data': {'flag': True, 'user': username}}))
         except:
-            return HttpResponse(json.dumps({'data': {'flag': False}}))
+           return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 # 注册新用户
 
@@ -47,11 +45,11 @@ def getMapDetail(request):
         try:
             map = models.GMap.objects.get(Map_ID=mapid)
             if map:
-                return render(request, "index.html", {"flag": True, "map": map})
+                return HttpResponse(json.dumps({'data': {'flag': True, 'map_content': map.Content}}))
             else:
-                return render(request, "index.html", {"flag": False})
+                return HttpResponse(json.dumps({'data': {'flag': False}}))
         except:
-            return render(request, "index.html", {"flag": False})
+            return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 def getMap(mapid):
     try:
@@ -92,9 +90,9 @@ def SaveMap(request):
         map_name = request.POST.get("map_name", None)
         try:
            mapid = AddMap(content, username, mapdescription, map_name)
-           return render(request, "index.html", {"flag": True, "mapid": mapid})
+           return HttpResponse(json.dumps({'data': {'flag': False, 'mapid': mapid}}))
         except:
-           return render(request, "index.html", {"flag": False})
+           return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 # 获取一个用户保存的所有地图
 def getAllMap(request):
@@ -103,11 +101,11 @@ def getAllMap(request):
         try:
             map = models.GMap.objects.get(User_name=username)
             if map:
-                return render(request, "index.html", {"flag": True, "map": map})
+                return HttpResponse(json.dumps({'data': {'flag': False, 'map_content': map.Content}}))
             else:
-                return render(request, "index.html", {"flag": False})
+                return HttpResponse(json.dumps({'data': {'flag': False}}))
         except:
-            return render(request, "index.html", {"flag": False})
+            return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 # 发表评论，返回操作是否成功的状态
 def AddComment(request):
@@ -119,9 +117,9 @@ def AddComment(request):
         try:
              models.Comment.objects.create(State_ID=stateid, Comment_User_name=commentusername, content=content,
                                            IsMap=ismap)
-             return render(request, "index.html", {"flag": True})
+             return HttpResponse(json.dumps({'data': {'flag': True}}))
         except:
-             return render(request, "index.html", {"flag": False})
+             return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 
 # 返回动态
@@ -133,12 +131,12 @@ def getStateDetail(request):
             comment = models.Comment.objects.get(State_ID=stateid)
             map = getMap(state.Map_ID)
             if state & map:
-               return render(request, "index.html", {"flag": True, "state": state, "map": map.Content,
-                                                     "comment": comment})
+               return HttpResponse(json.dumps({'data': {"flag": True, "state": state, "map": map.Content,
+                                                        "comment": comment}}))
             else:
-               return render(request, "index.html", {"flag": False})
+               return HttpResponse(json.dumps({'data': {'flag': False}}))
         except:
-            return render(request, "index.html", {"flag": False})
+            return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 # 发表新动态
 def AddState(request):
@@ -152,11 +150,11 @@ def AddState(request):
             if mapid != 0:
                models.State.objects.create(User_name=username, Map_ID=mapid, Description=description,
                                            State_name=statename)
-               return render(request, "index.html", {"flag": True})
+               return HttpResponse(json.dumps({'data': {'flag': True}}))
             else:
-               return render(request, "index.html", {"flag": False})
+               return HttpResponse(json.dumps({'data': {'flag': False}}))
         except:
-            return render(request, "index.html", {"flag": False})
+            return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 
 
@@ -166,17 +164,18 @@ def getHotState(request):
         try:
             state_list = models.State.objects.all().order_by('-Like')
             map = getMap(state_list.Map_ID)
-            return render(request, "index.html", {"flag": True, "state_list": state_list.id, "map": map.Content})
+            return HttpResponse(json.dumps({'data': {"flag": True, "state_list": state_list.id, "map": map.Content}}))
+
         except:
-            return render(request, "index.html", {"flag": False, "state_list": None})
+            return HttpResponse(json.dumps({'data': {'flag': False}}))
 # 获取时间戳从高到低排序的动态列表
 def getNewState(request):
     if request.method == "POST":
         try:
             state_list = models.State.objects.all().order_by('-TimeStamp')
-            return render(request, "index.html", {"flag": True, "state_list": state_list.id, "map": map.Content})
+            return HttpResponse(json.dumps({'data': {"flag": True, "state_list": state_list.id, "map": map.Content}}))
         except:
-            return render(request, "index.html", {"flag": False, "state_list": None})
+            return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 
 # 点赞数
