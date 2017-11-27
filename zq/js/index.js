@@ -30,7 +30,7 @@
         if(manager.isLogin){
             login_register.css("display","none");        
             bgDiv.css("display","none");
-            loginButton.html(userName);
+            loginButton.html(username);
             common.username = username; //记录用户名
         }
     });
@@ -39,7 +39,7 @@
         if(manager.register){
             login_register.css("display","none");        
             bgDiv.css("display","none");
-            loginButton.html(userName); 
+            loginButton.html(username); 
             common.username = username; //记录用户名
         }
     });
@@ -64,18 +64,18 @@
 
     //实际控制登录和注册的manager对象
     var manager = {
-        isLogin: true,
-        isRegister:true,
+        isLogin: false,
+        isRegister:false,
         login: function (username, userPass) {
             $.ajax({
                 type: "POST",
-                url: "/login",
+                url: "/login/",
                 data: { "username": username, "password": password },
                 dataType: 'json',
                 async:false, //同步请求
                 success: function (myData) {
-                    manager.isLog = myData.data.flag;
-                    if (manager.isLog) {
+                    manager.isLogin = myData.data.flag;
+                    if (manager.isLogin) {
                         alert("登录成功");
                     } else {
                         alert("账号或密码不对")
@@ -89,12 +89,13 @@
         register: function (username, password) {
             $.ajax({
                 type: "POST",
-                url: "/register",
+                url: "/register/",
                 data: { "username": username, "password": password },
                 dataType: 'json',
                 async:false, //同步请求
                 success: function (myData) {
-                    if (myData.data.flag) {
+                    manager.isRegister = myData.data.flag;
+                    if (manager.isRegister) {
                         alert("注册成功");
                     }
                 },
