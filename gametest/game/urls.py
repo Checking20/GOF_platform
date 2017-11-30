@@ -6,11 +6,12 @@ urlpatterns = [
     url(r'^login/', views.login),
     url(r'^register/', views.register),
     url(r'^getMapDetail/', views.getMapDetail),
-    url(r'^SaveMap/', views.SaveMap),
+    url(r'^AddMap/', views.AddMap),
     url(r'^getAllMap/', views.getAllMap),
     url(r'^AddComment/', views.AddComment),
     url(r'^getStateDetail/', views.getStateDetail),
     url(r'^AddState/', views.AddState),
     url(r'^getHotState/', views.getHotState),
     url(r'^getNewState/', views.getNewState),
+    url(r'^AddLike/', views.AddLike),
 ]
