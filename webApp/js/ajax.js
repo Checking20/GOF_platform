@@ -1,3 +1,6 @@
+var prefix='http://106.14.125.177';
+
+
 document.getElementById('upload').onclick=function () {
     var bool=true;
     for(var i=0;i<paintArr.length;i++){
@@ -10,9 +13,9 @@ document.getElementById('upload').onclick=function () {
         alert('wrong')
     }else {
         $.ajax({
-            url:'/upLoad',
+            url:prefix+'/AddMap/',
             type:'POST',
-            data:paintArr,
+            data:{userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'},
             dataType:'JSON',
             success:function (data) {
                 console.log(data);
@@ -23,14 +26,15 @@ document.getElementById('upload').onclick=function () {
         })
     }
 
-
+    console.log
 }
 
 document.getElementById('get').onclick=function () {
     $.ajax({
-        url:'/getImg',
-        type:'get',
+        url:prefix+'/getMapDetail/',
+        type:'post',
         dataType:'json',
+        data:{mapId:1},
         success:function (data) {
             console.log(data);
         },
