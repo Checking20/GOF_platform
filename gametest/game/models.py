@@ -15,10 +15,10 @@ class GMap(models.Model):
     User_name = models.CharField(max_length=32, null=False)
     map_description = models.CharField(max_length=64, null=True)
     map_name = models.CharField(max_length=32, null=True)
-    Createtime = models.DateTimeField(auto_now=True)
+    Createtime = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
-        return self.Createtime
+        return self.User_name
 
 class State(models.Model):
     User_name = models.CharField(max_length=32, null=False)

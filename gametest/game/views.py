@@ -25,11 +25,14 @@ def login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         try:
-           models.GUser.objects.filter(User_name=username, Password=password)
-           # 插入新的用户数据
-           return HttpResponse(json.dumps({'data': {'flag': True}}))
+            user = models.GUser.objects.filter(User_name=username, Password=password)
+            # 插入新的用户数据
+            if user:
+               return HttpResponse(json.dumps({'data': {'flag': True}}))
+            else:
+               return HttpResponse(json.dumps({'data': {'flag': False}}))
         except:
-           return HttpResponse(json.dumps({'data': {'flag': False}}))
+               return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 # 注册新用户
 
@@ -52,23 +55,22 @@ def register(request):
 @csrf_exempt
 def getMapDetail(request):
     if request.method == "POST":
-        mapid = request.POST.get("mapid", None)
+        mapid = request.POST.get("mapid")
         try:
-            map = models.GMap.objects.filter(Map_ID=mapid)
-            if map:
-                return HttpResponse(json.dumps({'data': {'flag': True, 'map': {'mapContent': map.Content,
-                                                         'date': map.Createtime,
-                                                         'mapDescription': map.map_description}}}))
+            mapp = models.GMap.objects.filter(Map_ID=mapid)
+            if mapp:
+                return HttpResponse(json.dumps({'data': {'flag': True, 'map': mapp}}))
             else:
                 return HttpResponse(json.dumps({'data': {'flag': False}}))
+
         except:
             return HttpResponse(json.dumps({'data': {'flag': False}}))
 @csrf_exempt
 def getMap(mapid):
     try:
-        map = models.GMap.objects.filter(Map_ID=mapid)
-        if map:
-            return map
+        mapp = models.GMap.objects.filter(Map_ID=mapid)
+        if mapp:
+            return mapp
         else:
             return None
     except:
@@ -87,28 +89,31 @@ def Hash(comment):
 
 # 添加地图,返回地图ID
 @csrf_exempt
-def SaveMap(content, username, mapdescription=None, map_name=None):
+def SaveMap(content, username):
     try:
         mapid = Hash(content)
-        models.GMap.objects.create(Map_ID=mapid, Content=content, User_name=username, map_description=mapdescription,
-                                   map_name=map_name)
+        models.GMap.objects.create(Map_ID=mapid, Content=content, User_name=username)
         return mapid
     except:
-        return 0
+        return 90
 
 # 保存用户地图
 @csrf_exempt
 def AddMap(request):
     if request.method == "POST":
-        content = request.POST.get("content", None)
-        username = request.POST.get("username", None)
+        content = request.POST.get("content")
+        username = request.POST.get("username")
         mapdescription = request.POST.get("mapdescription", None)
         map_name = request.POST.get("map_name", None)
         try:
-           mapid = SaveMap(content, username, mapdescription, map_name)
-           return HttpResponse(json.dumps({'data': {'flag': False, 'mapid': mapid}}))
+            mapid = SaveMap(content, username)
+            if mapid != 90:
+               return HttpResponse(json.dumps({'data': {'flag': True, 'mapid': mapid}}))
+            else:
+               return HttpResponse(json.dumps({'data': {'flag': False}}))
+
         except:
-           return HttpResponse(json.dumps({'data': {'flag': False}}))
+            return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 # 获取一个用户保存的所有地图
 @csrf_exempt
@@ -128,10 +133,10 @@ def getAllMap(request):
 @csrf_exempt
 def AddComment(request):
     if request.method == "POST":
-        stateid = request.POST.get("stateid", None)
-        commentusername = request.POST.get("commentusername", None)
+        stateid = request.POST.get("stateid")
+        commentusername = request.POST.get("commentusername")
         content = request.POST.get("content", None)
-        ismap = request.POST.get("IsMap", None)
+        ismap = request.POST.get("IsMap")
         try:
              models.Comment.objects.create(State_ID=stateid, Comment_User_name=commentusername, content=content,
                                            IsMap=ismap)

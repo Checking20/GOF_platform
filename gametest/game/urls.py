@@ -3,9 +3,9 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index),
-    url(r'^share.html/', views.share),
-    url(r'^begin.html/', views.begin),
-    url(r'^work.html/', views.work),
+    url(r'^share/', views.share),
+    url(r'^begin/', views.begin),
+    url(r'^work/', views.work),
     url(r'^login/', views.login),
     url(r'^register/', views.register),
     url(r'^getMapDetail/', views.getMapDetail),
