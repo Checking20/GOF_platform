@@ -15,7 +15,7 @@ document.getElementById('upload').onclick=function () {
         $.ajax({
             url:prefix+'/AddMap/',
             type:'POST',
-            data:{userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'},
+            data:JSON.stringify({userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'}),
             dataType:'JSON',
             success:function (data) {
                 console.log(data);
@@ -26,7 +26,7 @@ document.getElementById('upload').onclick=function () {
         })
     }
 
-    console.log
+    console.log(JSON.stringify({userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'}))
 }
 
 document.getElementById('get').onclick=function () {
@@ -34,7 +34,7 @@ document.getElementById('get').onclick=function () {
         url:prefix+'/getMapDetail/',
         type:'post',
         dataType:'json',
-        data:{mapId:1},
+        data:JSON.stringify({mapId:0}),
         success:function (data) {
             console.log(data);
         },
