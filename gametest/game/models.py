@@ -13,9 +13,6 @@ class GMap(models.Model):
     Map_ID = models.BigIntegerField(primary_key=True, null=False)
     Content = models.CharField(max_length=255, null=False)
     User_name = models.CharField(max_length=32, null=False)
-    map_description = models.CharField(max_length=64, null=True)
-    map_name = models.CharField(max_length=32, null=True)
-    Createtime = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.User_name

@@ -103,8 +103,6 @@ def AddMap(request):
     if request.method == "POST":
         content = request.POST.get("content")
         username = request.POST.get("username")
-        mapdescription = request.POST.get("mapdescription", None)
-        map_name = request.POST.get("map_name", None)
         try:
             mapid = SaveMap(content, username)
             if mapid != 90:
@@ -166,12 +164,12 @@ def getStateDetail(request):
 @csrf_exempt
 def AddState(request):
     if request.method == "POST":
-        username = request.POST.get("username", None)
-        content = request.POST.get("content", None)
+        username = request.POST.get("username")
+        content = request.POST.get("content")
         description = request.POST.get("feeling", None)
         statename = request.POST.get("statename", None)
         try:
-            mapid = AddMap(content, username, description, statename)
+            mapid = SaveMap(content, username, description, statename)
             if mapid != 0:
                models.State.objects.create(User_name=username, Map_ID=mapid, Description=description,
                                            State_name=statename)
@@ -189,8 +187,8 @@ def getHotState(request):
     if request.method == "POST":
         try:
             state_list = models.State.objects.all().order_by('-Like')
-            map = getMap(state_list.Map_ID)
-            return HttpResponse(json.dumps({'data': {"flag": True, "state_list": state_list, "map_content": map.Content}}))
+            mapp = getMap(state_list.Map_ID)
+            return HttpResponse(json.dumps({'data': {"flag": True, "state_list": state_list, "map_content": mapp.Content}}))
 
         except:
             return HttpResponse(json.dumps({'data': {'flag': False}}))
@@ -200,8 +198,8 @@ def getNewState(request):
     if request.method == "POST":
         try:
             state_list = models.State.objects.all().order_by('-TimeStamp')
-            map = getMap(state_list.Map_ID)
-            return HttpResponse(json.dumps({'data': {"flag": True, "state_list": state_list, "map_content": map.Content}}))
+            mapp = getMap(state_list.Map_ID)
+            return HttpResponse(json.dumps({'data': {"flag": True, "state_list": state_list, "map_content": mapp.Content}}))
         except:
             return HttpResponse(json.dumps({'data': {'flag': False}}))
 
