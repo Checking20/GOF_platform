@@ -104,7 +104,6 @@ function evolve() {
 
     }
     paint(paintArr);
-
 }
 
 function paint(arr) {

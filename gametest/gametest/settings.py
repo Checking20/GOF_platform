@@ -24,7 +24,7 @@ SECRET_KEY = 'xkwgm3*3dny6ly@fr_u7nn1pb_d&ck_spk8z03cu!=88jzw%cf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['106.14.125.177','localhost']
 
 
 # Application definition
@@ -75,12 +75,8 @@ WSGI_APPLICATION = 'gametest.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'seep',
-        'USER': 'postgres',
-        'PASSWORD': '123456llx',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

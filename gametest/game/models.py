@@ -36,6 +36,7 @@ class Comment(models.Model):
     State_ID = models.IntegerField(null=False)
     Comment_User_name = models.CharField(max_length=32, null=False)
     content = models.CharField(max_length=255, null=False)
+    Createtime = models.DateTimeField(auto_now=True)
     IsMap = models.BooleanField(null=False)
 
     def __str__(self):
