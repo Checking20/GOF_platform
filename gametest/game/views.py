@@ -6,8 +6,18 @@ import json
 
 # Create your views here.
 # 登录
+@csrf_exempt
 def index(request):
     return render(request, "index.html")
+@csrf_exempt
+def share(request):
+    return render(request, "share.html")
+@csrf_exempt
+def begin(request):
+    return render(request, "begin.html")
+@csrf_exempt
+def work(request):
+    return render(request, "work.html")
 
 @csrf_exempt
 def login(request):
@@ -39,6 +49,7 @@ def register(request):
 
 
 # 根据Map_ID获取Map细节
+@csrf_exempt
 def getMapDetail(request):
     if request.method == "POST":
         mapid = request.POST.get("mapid", None)
@@ -52,7 +63,7 @@ def getMapDetail(request):
                 return HttpResponse(json.dumps({'data': {'flag': False}}))
         except:
             return HttpResponse(json.dumps({'data': {'flag': False}}))
-
+@csrf_exempt
 def getMap(mapid):
     try:
         map = models.GMap.objects.filter(Map_ID=mapid)
@@ -64,6 +75,7 @@ def getMap(mapid):
         return None
 
 # Hash 生成Map_ID
+@csrf_exempt
 def Hash(comment):
     seed = 31
     mod = 1000000007
@@ -74,6 +86,7 @@ def Hash(comment):
     return hash
 
 # 添加地图,返回地图ID
+@csrf_exempt
 def SaveMap(content, username, mapdescription=None, map_name=None):
     try:
         mapid = Hash(content)
@@ -84,6 +97,7 @@ def SaveMap(content, username, mapdescription=None, map_name=None):
         return 0
 
 # 保存用户地图
+@csrf_exempt
 def AddMap(request):
     if request.method == "POST":
         content = request.POST.get("content", None)
@@ -97,6 +111,7 @@ def AddMap(request):
            return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 # 获取一个用户保存的所有地图
+@csrf_exempt
 def getAllMap(request):
     if request.method == "POST":
         username = request.POST.get("username", None)
@@ -110,6 +125,7 @@ def getAllMap(request):
             return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 # 发表评论，返回操作是否成功的状态
+@csrf_exempt
 def AddComment(request):
     if request.method == "POST":
         stateid = request.POST.get("stateid", None)
@@ -125,6 +141,7 @@ def AddComment(request):
 
 
 # 返回动态
+@csrf_exempt
 def getStateDetail(request):
     if request.method == "POST":
         stateid = request.POST.get("stateid", None)
@@ -141,6 +158,7 @@ def getStateDetail(request):
             return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 # 发表新动态
+@csrf_exempt
 def AddState(request):
     if request.method == "POST":
         username = request.POST.get("username", None)
@@ -161,6 +179,7 @@ def AddState(request):
 
 
 # 获取点赞量从高到低排序的动态列表
+@csrf_exempt
 def getHotState(request):
     if request.method == "POST":
         try:
@@ -171,6 +190,7 @@ def getHotState(request):
         except:
             return HttpResponse(json.dumps({'data': {'flag': False}}))
 # 获取时间戳从高到低排序的动态列表
+@csrf_exempt
 def getNewState(request):
     if request.method == "POST":
         try:
@@ -181,6 +201,7 @@ def getNewState(request):
             return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 # 更新点赞数
+@csrf_exempt
 def AddLike(request):
     if request.method == "POST":
         stateid = request.POST.get("stateid")
