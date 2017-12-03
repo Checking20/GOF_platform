@@ -1,1 +1,2 @@
-这个分支测试完成后会merge到master
+这个分支是服务器上的稳定版本
+测试完成后会merge到master
