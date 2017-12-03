@@ -1,0 +1,129 @@
+html,body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-image: url(../images/bg.png);
+    background-repeat:no-repeat;
+    background-size: 100% 100%;
+   
+}
+.main{
+    width: 100%;
+    height: 100%;
+}
+.main>.works{
+   position: fixed;
+   left: 40%;
+   top: 50%;
+}
+.main>.begin{
+    position: fixed;
+    right: 40%;
+    top: 50%;
+}
+.button_icon{
+    text-align: center;
+    cursor: pointer;
+}
+.button_icon img{
+    width: 50%;
+    margin-top: 5px;
+}
+
+
+
+
+
+/* 登录注册框 */
+
+.loginButton{
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    color: #fff;
+    cursor: pointer;
+}
+.login_register{
+    display: none;
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background-color: #eee;
+    left: 50%;
+    margin-left: -150px;
+    top:20%;
+    z-index: 10;
+}
+.login_register>div{
+    height: 50px;
+    width: 280px;
+    margin: 0 auto;
+    margin-top: 20px;
+    line-height: 50px;
+}
+
+.login_register>.brand{
+    text-align: center;
+    font-size: 24px;
+}
+
+.login_register .text{
+    width: 50px;
+    height: 100%;
+    float: left;
+    background-color: white;
+    border-radius: 10px 0px 0px 10px;
+}
+.login_register .text img{
+    height: 30px;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.login_register input{
+    float: right;
+    height: 100%;
+    width: 200px;
+    padding-left: 10px;
+    border: none;
+    border-radius: 0px 10px 10px 0px;
+}
+
+.lr_button{
+    background-color: #fff;
+}
+.lr_button>.login{
+    float: left;
+    width: 60px;
+    text-align: center;
+    cursor: pointer;
+}
+.lr_button>.login:hover{
+    background-color: #eee;
+}
+.lr_button>.or{
+    float: left;
+    width: 160px;
+    text-align: center;
+}
+.lr_button>.register{
+    float: right;
+    width: 60px;
+    text-align: center;
+    cursor: pointer;
+}
+.lr_button>.register:hover{
+    background-color: #eee;
+}
+
+.bg{
+    position: absolute;
+    display: none;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 3;
+}
