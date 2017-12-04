@@ -53,7 +53,7 @@
     //点击works和begin跳转时
     $(".works").click(function(){
         if(manager.isLogin||manager.isRegister){
-            location.href='./share.html';
+            location.href='./share';
         }
         else{
             alert("请先登录");
@@ -61,7 +61,7 @@
     });
     $(".begin").click(function(){
         if(manager.isLogin||manager.isRegister){
-            location.href='./begin.html';
+            location.href='./begin';
         }
         else{
             alert("请先登录");
@@ -80,7 +80,7 @@
                 dataType: 'json',
                 //async:false, //同步请求
                 success: function (myData) {
-                    console.log(myData.data);
+                    //console.log(myData.data);
                     alert(myData.data.flag);
                     manager.isLogin = myData.data.flag;
                     if (manager.isLogin) {

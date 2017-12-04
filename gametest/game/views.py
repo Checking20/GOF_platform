@@ -28,11 +28,13 @@ def login(request):
             user = models.GUser.objects.filter(User_name=username, Password=password)
             # 插入新的用户数据
             if user:
-               return HttpResponse(json.dumps({'data': {'flag': True}}))
+                response = HttpResponse(json.dumps({'data': {'flag': True}}))
+                response.set_cookie("username", username)
+                return response
             else:
-               return HttpResponse(json.dumps({'data': {'flag': False}}))
+                return HttpResponse(json.dumps({'data': {'flag': False}}))
         except:
-               return HttpResponse(json.dumps({'data': {'flag': False}}))
+                return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 # 注册新用户
 
@@ -42,11 +44,13 @@ def register(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         try:
-           models.GUser.objects.create(User_name=username, Password=password)
-           # 插入新的用户数据
-           return HttpResponse(json.dumps({'data': {'flag': True}}))
+            models.GUser.objects.create(User_name=username, Password=password)
+            # 插入新的用户数据
+            response = HttpResponse(json.dumps({'data': {'flag': True}}))
+            response.set_cookie("username", username)
+            return response
         except:
-           return HttpResponse(json.dumps({'data': {'flag': False}}))
+            return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 
 
@@ -56,12 +60,13 @@ def register(request):
 def getMapDetail(request):
     if request.method == "POST":
         mapid = request.POST.get("mapid")
+        print(mapid)
         try:
             mapp = models.GMap.objects.filter(Map_ID=mapid)
             if mapp:
                 return HttpResponse(json.dumps({'data': {'flag': True, 'map': mapp}}))
             else:
-                return HttpResponse(json.dumps({'data': {'flag': False}}))
+                return HttpResponse(json.dumps({'data': {'flag': False, 'jjj': "jjjs"}}))
 
         except:
             return HttpResponse(json.dumps({'data': {'flag': False}}))
@@ -77,22 +82,26 @@ def getMap(mapid):
         return None
 
 # Hash 生成Map_ID
-@csrf_exempt
-def Hash(comment):
+#@csrf_exempt
+def Hash(s):
     seed = 31
     mod = 1000000007
-    s = comment
     hash = 0
-    for i in range(s.length()):
-        hash = (hash * seed + s[i] - 'a' + 1) % mod
+    for i in range(len(s)):
+        hash = (hash * seed + ord(s[i]) - ord('a') + 1) % mod
+    print(hash)
     return hash
 
 # 添加地图,返回地图ID
 @csrf_exempt
 def SaveMap(content, username):
+    s = ''
+    for i in range(len(content)):
+        s = s + content[i]
+    print(s)
     try:
         mapid = Hash(content)
-        models.GMap.objects.create(Map_ID=mapid, Content=content, User_name=username)
+        models.GMap.objects.create(Map_ID=mapid, Content=s, User_name=username)
         return mapid
     except:
         return 90
@@ -101,14 +110,21 @@ def SaveMap(content, username):
 @csrf_exempt
 def AddMap(request):
     if request.method == "POST":
-        content = request.POST.get("content")
-        username = request.POST.get("username")
+        content = request.POST.getlist('mapContent')
+        #username = request.POST.get("username")
+        #print(content)
+        username = request.COOKIES["username"]
+        #return HttpResponse(json.dumps({'data': {'username': content}}))
         try:
             mapid = SaveMap(content, username)
+            #mapid = Hash(content)
+            #print(mapid)
+            #print(username)
+            #models.GMap.objects.create(Map_ID=mapid, Content=content, User_name=username)
             if mapid != 90:
                return HttpResponse(json.dumps({'data': {'flag': True, 'mapid': mapid}}))
             else:
-               return HttpResponse(json.dumps({'data': {'flag': False}}))
+               return HttpResponse(json.dumps({'data': {'flag': False, 'mapid': mapid}}))
 
         except:
             return HttpResponse(json.dumps({'data': {'flag': False}}))
@@ -192,6 +208,7 @@ def getHotState(request):
 
         except:
             return HttpResponse(json.dumps({'data': {'flag': False}}))
+
 # 获取时间戳从高到低排序的动态列表
 @csrf_exempt
 def getNewState(request):
@@ -216,6 +233,44 @@ def AddLike(request):
             return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 
+
+
+#JFK  Here
+@csrf_exempt
+def getWorks(request):
+    if request.method == "GET":
+        type = request.GET.get("type")
+        #热门
+        if type == "hot":
+            try:
+                state_list = models.State.objects.all().order_by('-Like')
+                mapp = getMap(state_list.Map_ID)
+                return HttpResponse(
+                    json.dumps({'data': {"flag": True, "state_list": state_list.id, "map_content": mapp.Content}}))
+            except:
+                return HttpResponse(json.dumps({'data': {'flag': False}}))
+        #最近热门（待完成）
+        if type == "recent_hot":
+            #TODO LIST
+            return HttpResponse(json.dumps({'data': {'flag': False}}))
+        #最新
+        if type == "lately":
+            try:
+                state_list = models.State.objects.all().order_by('-TimeStamp')
+                mapp = getMap(state_list.Map_ID)
+                return HttpResponse(
+                    json.dumps({'data': {"flag": True, "state_list": state_list.id, "map_content": mapp.Content}}))
+            except:
+                return HttpResponse(json.dumps({'data': {'flag': False}}))
+        #最早
+        if type == "lastly":
+            try:
+                state_list = models.State.objects.all().order_by('TimeStamp')
+                mapp = getMap(state_list.Map_ID)
+                return HttpResponse(
+                    json.dumps({'data': {"flag": True, "state_list": state_list.id, "map_content": mapp.Content}}))
+            except:
+                return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 
 

@@ -11,6 +11,7 @@ window.onload = function () {
             data: { "type": type },
             dataType: 'json',
             success: function (myData) {
+                //此处返回的是对应type的works的列表 自取需要多少个
                 myData.data.forEach(function (item, index, arr) {
                     addWork(item);
                 })

@@ -11,7 +11,7 @@ class GUser(models.Model):
 
 class GMap(models.Model):
     Map_ID = models.BigIntegerField(primary_key=True, null=False)
-    Content = models.CharField(max_length=255, null=False)
+    Content = models.TextField()
     User_name = models.CharField(max_length=32, null=False)
 
     def __str__(self):

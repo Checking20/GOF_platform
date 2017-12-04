@@ -17,4 +17,7 @@ urlpatterns = [
     url(r'^getHotState/', views.getHotState),
     url(r'^getNewState/', views.getNewState),
     url(r'^AddLike/', views.AddLike),
+
+    #JFK Here
+    url(r'^getWorks/', views.getWorks),
 ]

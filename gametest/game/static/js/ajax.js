@@ -9,6 +9,7 @@ document.getElementById('upload').onclick=function () {
             break
         }
     }
+    //paintArr = [1,2,3,4,5,6,7,8];
     if(paintArr==[]||bool){
         alert('wrong')
     }else {
@@ -16,9 +17,11 @@ document.getElementById('upload').onclick=function () {
             //url:prefix+'/AddMap/',
             url:'/AddMap/',
             type:'POST',
-            data:{userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'},
+            traditional: true,
+            data:{"mapContent": paintArr},
             dataType:'JSON',
             success:function (data) {
+                console.log(paintArr);
                 console.log(1111);
                 console.log(data.data.username);
             },
@@ -35,9 +38,9 @@ document.getElementById('get').onclick=function () {
     $.ajax({
         //url:prefix+'/getMapDetail/',
         url:'/getMapDetail/',
-        type:'post',
-        dataType:'json',
-        data:{mapId:1},
+        type:'POST',
+        dataType:'JSON',
+        data:{"mapid": 123},
         success:function (data) {
             console.log(data);
         },
