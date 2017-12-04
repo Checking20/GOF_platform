@@ -9,13 +9,14 @@ document.getElementById('upload').onclick=function () {
             break
         }
     }
-    if(paintArr==[]||bool){
+    if(bool){
         alert('wrong')
     }else {
         $.ajax({
             url:prefix+'/AddMap/',
             type:'POST',
-            data:JSON.stringify({userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'}),
+            // data:JSON.stringify({userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'}),
+            data:{userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'},
             dataType:'JSON',
             success:function (data) {
                 console.log(data);
