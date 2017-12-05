@@ -1,0 +1,19 @@
+*** Starting uWSGI 2.0.15 (64bit) on [Tue Dec  5 20:36:12 2017] ***
+compiled with version: 4.4.7 20120313 (Red Hat 4.4.7-18) on 01 December 2017 12:34:32
+os: Linux-2.6.32-696.3.2.el6.x86_64 #1 SMP Tue Jun 20 01:26:55 UTC 2017
+nodename: shanghai
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 1
+current working directory: /root/git/GOF_platform/gametest
+detected binary path: /opt/python3/bin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+your processes number limit is 3900
+your memory page size is 4096 bytes
+detected max file descriptor number: 65535
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
