@@ -7,10 +7,11 @@ document.getElementById('configUpload').onclick=function () {
         alert('input error');
     }else{
         $.ajax({
-            url:prefix+'/AddMap/',
+            url:prefix+'/AddState/',
             type:'POST',
+            traditional:true,
             // data:JSON.stringify({userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'}),
-            data:{userId:1,mapContent:paintArr,mapName:name,mapDescrition:description},
+            data:{content:paintArr,statename:name,description:description},
             dataType:'JSON',
             success:function (data) {
                 console.log(data);
@@ -47,9 +48,9 @@ document.getElementById('upload').onclick=function () {
 document.getElementById('get').onclick=function () {
     $.ajax({
         url:prefix+'/getMapDetail/',
-        type:'post',
+        type:'POST',
         dataType:'json',
-        data:JSON.stringify({mapId:0}),
+        data:JSON.stringify({mapId:12341234}),
         success:function (data) {
             console.log(data);
         },
@@ -57,4 +58,7 @@ document.getElementById('get').onclick=function () {
             console.log(data);
         }
     })
+
+    console.log({mapId:12341234});
+    console.log()
 }
