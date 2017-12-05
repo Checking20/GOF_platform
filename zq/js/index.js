@@ -4,12 +4,12 @@
     var login_register = $(".login_register");
     var login = $(".login");
     var register = $(".register");
-    var usernameInput = $(".username");
-    var passwordInput = $(".password")
+    var usernameInput = $("#username");
+    var passwordInput = $("#password")
     var username; //用户名
     var password; //密码
 
-
+    var prefix = 'http://106.14.125.177'
     //得到输入框中的用户和密码
     usernameInput.change(function(){
        username =  usernameInput.val();
@@ -27,6 +27,9 @@
     //登录和注册
     login.click(function(){
         manager.login(username,password);
+        console.log(username);
+        console.log(password);
+        
         if(manager.isLogin){
             login_register.css("display","none");        
             bgDiv.css("display","none");
@@ -66,10 +69,10 @@
     var manager = {
         isLogin: false,
         isRegister:false,
-        login: function (username, userPass) {
+        login: function (username, password) {
             $.ajax({
                 type: "POST",
-                url: "/login/",
+                url: prefix + "/login/",
                 data: { "username": username, "password": password },
                 dataType: 'json',
                 async:false, //同步请求
@@ -89,9 +92,9 @@
         register: function (username, password) {
             $.ajax({
                 type: "POST",
-                url: "/register/",
+                url: prefix+"/register/",
                 data: { "username": username, "password": password },
-                dataType: 'json',
+                dataType: 'json                     ',
                 async:false, //同步请求
                 success: function (myData) {
                     manager.isRegister = myData.data.flag;
