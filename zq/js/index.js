@@ -4,8 +4,8 @@
     var login_register = $(".login_register");
     var login = $(".login");
     var register = $(".register");
-    var usernameInput = $(".username");
-    var passwordInput = $(".password")
+    var usernameInput = $("#username");
+    var passwordInput = $("#password")
     var username; //用户名
     var password; //密码
 
@@ -27,6 +27,9 @@
     //登录和注册
     login.click(function(){
         manager.login(username,password);
+        console.log(username);
+        console.log(password);
+        
         if(manager.isLogin){
             login_register.css("display","none");        
             bgDiv.css("display","none");
@@ -66,7 +69,7 @@
     var manager = {
         isLogin: false,
         isRegister:false,
-        login: function (username, userPass) {
+        login: function (username, password) {
             $.ajax({
                 type: "POST",
                 url: prefix + "/login/",
