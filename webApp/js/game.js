@@ -22,6 +22,7 @@ function init() {
         div=document.createElement('li');
         div.setAttribute('num',num);
         num++;
+
         docFrag.appendChild(div);
     }
     game.appendChild(docFrag);
@@ -56,15 +57,50 @@ document.getElementById('game').onclick=function (e) {
 }
 
 
-
-function outPut() {
-    var selected=document.querySelectorAll('.active');
-    var numAns=[];
-    for(var i=0;i<selected.length;i++){
-        numAns.push(selected[i].getAttribute('num'));
+function onMouseOver(e) {
+    if(e.target.nodeName.toLowerCase()==='li'&&e.target.getAttribute('num')!=undefined){
+        if(e.target.className==''){
+            switch (colorState){
+                case 1:
+                    e.target.className='active lightblue';
+                    break;
+                case 2:
+                    e.target.className='active purple';
+                    break;
+                case 3:
+                    e.target.className='active red';
+                    break;
+                case 4:
+                    e.target.className='active yellow';
+                    break;
+            }
+            paintArr[e.target.getAttribute('num')]=1;
+        }
     }
-    return numAns;
 }
+
+
+document.getElementsByTagName('body')[0].onmouseup=function () {
+    document.getElementById('game').removeEventListener('mouseover',onMouseOver,false);
+}
+
+document.getElementsByTagName('body')[0].ondragover=function () {
+    document.getElementById('game').removeEventListener('mouseover',onMouseOver,false);
+}
+
+document.getElementsByTagName('body')[0].onmousedown=function () {
+
+    document.getElementById('game').addEventListener('mouseover',onMouseOver,false);
+}
+
+// function outPut() {
+//     var selected=document.querySelectorAll('.active');
+//     var numAns=[];
+//     for(var i=0;i<selected.length;i++){
+//         numAns.push(selected[i].getAttribute('num'));
+//     }
+//     return numAns;
+// }
 
 var timeId;
 
@@ -95,9 +131,7 @@ document.getElementById('range').oninput=function () {
 
 
 function evolve() {
-
     var selected=document.querySelectorAll('#game>li');
-
     for(var i=0;i<selected.length;i++){
         var num=0;
         var iRow=i%rows;
@@ -196,5 +230,19 @@ document.getElementById('leftLine').onclick=function (e) {
                 colorState=4;
                 break;
         }
+    }
+}
+
+document.getElementById('clear').onclick=function () {
+    for(var i=0;i<rows*cols;i++){
+        paintArr[i]=0;
+    };
+    paint(paintArr);
+    if(state==1){
+
+        state=0;
+        clearInterval(timeId);
+        document.getElementById('evolve').innerText='演变';
+
     }
 }
