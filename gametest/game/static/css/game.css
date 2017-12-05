@@ -1,0 +1,142 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+
+#game{
+    margin: 10px auto 0;
+    width: 402px;
+    height: 402px;
+    font-size: 0;
+    border: 1px solid rgba(255,255,255,0.5);;
+    background-color: #131d35;
+    border-radius: 4px;
+    position: relative;
+}
+#game>li{
+
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(255,255,255,0.5);
+
+
+    display:inline-block;
+}
+
+.selected{
+    background-color: #da3d32;
+}
+
+
+
+
+#range{
+    width: 200px;
+    margin: 10px auto 0 ;
+    display: block;
+
+    transform: rotate(90deg);
+    outline: none;
+    -webkit-appearance: none;
+    width: 200px;
+    height: 20px;
+    border: 1px solid #b6afb2;
+    border-radius: 10px;
+    border-left: none;
+    border-right: none;
+    background-color: #b6afb2;
+
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 25px;
+    width: 25px;
+
+    background: #ffffff;
+    border-radius: 50%; /*外观设置为圆形*/
+    border: solid 0.125em rgba(205, 224, 230, 0.5); /*设置边框*/
+    box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/
+}
+
+#text{
+    text-align: center;
+    font-size: 14px;
+
+    position: relative;
+    left:100px;
+    top:-20px;
+}
+
+html{
+    height: 100%;
+}
+body{
+    height: 100%;
+
+    background-image: url("background.jpg");
+}
+.top{
+    height: 10%;
+    background-color: #201e21;
+    position: relative;
+}
+.top>p{
+    color: #e7e1e4;
+    font-size: 24px;
+    position: absolute;
+    left: 25%;
+    bottom: 2%;
+}
+
+.buttonGroup{
+    width: 402px;
+    height: 40px;
+    margin: 10px auto 0;
+    background-color: #737582;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 5px;
+}
+
+.line{
+    position: absolute;
+    right: -150px;
+    top:200px;
+}
+
+.leftLine{
+    position: absolute;
+    left: -60px;
+    width:34px;
+    height: 300px;
+    border-radius: 10px;
+    border:none;
+    display: flex;
+    background-color: #131d35;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 10px;
+    align-items: center;
+}
+
+.leftLine>li{
+    width: 25px;
+    height: 25px;
+    margin-bottom: 10px;
+    border-radius:5px ;
+    cursor: pointer;
+}
+.lightblue{
+    background-color: #4efcb6;
+}
+.purple{
+    background-color: #f64ee0;
+}
+.red{
+    background-color: #da3d32;
+}
+.yellow{
+    background-color: #f2fd43;
+}
