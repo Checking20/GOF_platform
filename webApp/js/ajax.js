@@ -10,13 +10,17 @@ document.getElementById('configUpload').onclick=function () {
             url:prefix+'/AddMap/',
             type:'POST',
             // data:JSON.stringify({userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'}),
-            data:{userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'},
+            data:{userId:1,mapContent:paintArr,mapName:name,mapDescrition:description},
             dataType:'JSON',
             success:function (data) {
                 console.log(data);
+                $('#myModal').modal('hide');
+                alert('success');
             },
             error:function (data) {
                 console.log(data);
+                $('#myModal').modal('hide');
+                alert('failure');
             }
         })
     }
