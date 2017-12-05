@@ -42,8 +42,6 @@ document.getElementById('upload').onclick=function () {
         $('#myModal').modal('show');
 
     }
-
-
 }
 
 document.getElementById('get').onclick=function () {

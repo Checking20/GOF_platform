@@ -193,6 +193,7 @@ function paint(arr) {
 
         }
     }
+    console.log('paint');
 }
 
 
@@ -243,6 +244,5 @@ document.getElementById('clear').onclick=function () {
         state=0;
         clearInterval(timeId);
         document.getElementById('evolve').innerText='演变';
-
     }
 }
