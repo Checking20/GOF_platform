@@ -61,12 +61,15 @@ def getMapDetail(request):
     if request.method == "POST":
         mapid = request.POST.get("mapid")
         print(mapid)
+        # mapid = 12341234
         try:
             mapp = models.GMap.objects.filter(Map_ID=mapid)
             if mapp:
-                return HttpResponse(json.dumps({'data': {'flag': True, 'map': mapp}}))
+                for maap in mapp:
+                    re = maap.Content
+                return HttpResponse(json.dumps({'data': {'flag': True, 'map': re}}))
             else:
-                return HttpResponse(json.dumps({'data': {'flag': False, 'jjj': "jjjs"}}))
+                return HttpResponse(json.dumps({'data': {'flag': "jjj"}}))
 
         except:
             return HttpResponse(json.dumps({'data': {'flag': False}}))
@@ -75,7 +78,8 @@ def getMap(mapid):
     try:
         mapp = models.GMap.objects.filter(Map_ID=mapid)
         if mapp:
-            return mapp
+            re = mapp
+            return re
         else:
             return None
     except:
@@ -148,12 +152,10 @@ def getAllMap(request):
 def AddComment(request):
     if request.method == "POST":
         stateid = request.POST.get("stateid")
-        commentusername = request.POST.get("commentusername")
-        content = request.POST.get("content", None)
-        ismap = request.POST.get("IsMap")
+        commentusername = request.COOKIES["username"]
+        content = request.POST.get("content")
         try:
-             models.Comment.objects.create(State_ID=stateid, Comment_User_name=commentusername, content=content,
-                                           IsMap=ismap)
+             models.Comment.objects.create(State_ID=stateid, Comment_User_name=commentusername, content=content)
              return HttpResponse(json.dumps({'data': {'flag': True}}))
         except:
              return HttpResponse(json.dumps({'data': {'flag': False}}))
@@ -166,13 +168,22 @@ def getStateDetail(request):
         stateid = request.POST.get("stateid", None)
         try:
             state = models.State.objects.filter(id=stateid)
-            comment = models.Comment.objects.filter(State_ID=stateid)
-            map = getMap(state.Map_ID)
-            if state & map:
-               return HttpResponse(json.dumps({'data': {"flag": True, 'statedetail': {"state": state, "map_content": map.Content,
-                                                        "comment": comment}}}))
+            if state:
+                for st in state:
+                    temp1 = st
             else:
-               return HttpResponse(json.dumps({'data': {'flag': False}}))
+                return HttpResponse(json.dumps({'data': {'flag': False, 'state': None}}))
+            comment = models.Comment.objects.filter(State_ID=stateid)
+            if comment:
+                for cc in comment:
+                    temp2 = cc
+            else:
+                temp2 = None
+            mapp = getMap(temp1.Map_ID)
+            return HttpResponse(json.dumps({'data': {"flag": True, 'statedetail': {'state': temp1,
+                                                                                   'map_content': mapp.Content,
+                                                                                   'comment': temp2}}}))
+
         except:
             return HttpResponse(json.dumps({'data': {'flag': False}}))
 
@@ -180,12 +191,12 @@ def getStateDetail(request):
 @csrf_exempt
 def AddState(request):
     if request.method == "POST":
-        username = request.POST.get("username")
+        username = request.COOKIES["username"]
         content = request.POST.get("content")
-        description = request.POST.get("feeling", None)
+        description = request.POST.get("description", None)
         statename = request.POST.get("statename", None)
         try:
-            mapid = SaveMap(content, username, description, statename)
+            mapid = SaveMap(content, username)
             if mapid != 0:
                models.State.objects.create(User_name=username, Map_ID=mapid, Description=description,
                                            State_name=statename)
@@ -273,12 +284,36 @@ def getWorks(request):
                 return HttpResponse(json.dumps({'data': {'flag': False}}))
 
 
+def testhhh():
+    mapid = 44587545
+    username = "za"
+    password = "123"
+    # user = models.GMap.objects.filter(Map_ID=mapid)
+
+    stateid = 2
+    description = "hhh"
+    statename = "bbb"
+    content = "lihailihai"
+    likenumber = 16
+    # state = models.State.objects.filter(id=stateid)
+    # models.State.objects.create(User_name=username, Map_ID=mapid, Description=description, State_name=statename)
+    # models.Comment.objects.create(State_ID=stateid, Comment_User_name=username, content=content)
+    # models.State.objects.filter(id=stateid).update(Like=likenumber)
+    state_list = models.State.objects.all().order_by('-Like')
+    mapp = getMap(state_list.Map_ID)
+    state = models.Comment.objects.filter(State_ID=stateid)
+    if mapp:
+        for use in mapp:
+            re = use
+        return re
+    else:
+        return True
+    # print(comment.Comment_User_name)
 
 
-
-
-
-
+def test(request):
+    abc = testhhh()
+    return HttpResponse(json.dumps({'data': {'flag': abc.Content}}))
 
 
 

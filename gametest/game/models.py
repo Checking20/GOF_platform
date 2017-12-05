@@ -11,7 +11,7 @@ class GUser(models.Model):
 
 class GMap(models.Model):
     Map_ID = models.BigIntegerField(primary_key=True, null=False)
-    Content = models.TextField()
+    Content = models.TextField(null=False)
     User_name = models.CharField(max_length=32, null=False)
 
     def __str__(self):
@@ -21,7 +21,6 @@ class State(models.Model):
     User_name = models.CharField(max_length=32, null=False)
     Map_ID = models.BigIntegerField(null=False)
     Like = models.IntegerField(null=False, default=0)
-    Read = models.IntegerField(null=False, default=0)
     Timestamp = models.DateTimeField(auto_now=True)
     Description = models.CharField(max_length=64, null=True)
     State_name = models.CharField(max_length=32, null=True)
@@ -32,9 +31,8 @@ class State(models.Model):
 class Comment(models.Model):
     State_ID = models.IntegerField(null=False)
     Comment_User_name = models.CharField(max_length=32, null=False)
-    content = models.CharField(max_length=255, null=False)
+    content = models.TextField(null=False)
     Createtime = models.DateTimeField(auto_now=True)
-    IsMap = models.BooleanField(null=False)
 
     def __str__(self):
         return self.Comment_User_name

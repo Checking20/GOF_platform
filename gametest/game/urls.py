@@ -20,4 +20,6 @@ urlpatterns = [
 
     #JFK Here
     url(r'^getWorks/', views.getWorks),
+    url(r'^testhhh/', views.testhhh),
+    url(r'^test/', views.test),
 ]
