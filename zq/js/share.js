@@ -1,7 +1,7 @@
 window.onload = function () {
     var works = $(".works");
     var prefix = 'http://106.14.125.177';
-    var contents = [1, 2, 3, 4, 5, 6, 7];
+    // var contents = [1, 2, 3, 4, 5, 6, 7];
 
     //得到某一栏目下的所有作品
     function getWorks(type) {
@@ -35,10 +35,11 @@ window.onload = function () {
     function init() {
         getWorks("hot");
     }
-    //测试代码
-    contents.forEach(function (item, index, arr) {
-        addWork(item);
-    })
+    init();
+    // //测试代码
+    // contents.forEach(function (item, index, arr) {
+    //     addWork(item);
+    // })
 
     //切换作品所属栏目并加载其下作品
     $(".sort_nav").click(function (event) {
