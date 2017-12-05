@@ -1,0 +1,92 @@
+#game{
+    margin: 10px auto 0;
+    width: 400px;
+    height: 400px;
+    font-size: 0;
+    border: 1px solid rgba(255,255,255,0.5);;
+    background-color: #131d35;
+    border-radius: 4px;
+    position: relative;
+}
+#game>li{
+
+    width: 18px;
+    height: 18px;
+    border: 1px solid rgba(255,255,255,0.5);
+    display:inline-block;
+}
+
+#range{
+    width: 200px;
+    margin: 10px auto 0 ;
+    display: block;
+    outline: none;
+    -webkit-appearance: none;
+    width: 200px;
+    height: 20px;
+    border: 1px solid #b6afb2;
+    border-radius: 10px;
+    border-left: none;
+    border-right: none;
+    background-color: #b6afb2;
+
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 25px;
+    width: 25px;
+
+    background: #ffffff;
+    border-radius: 50%; /*外观设置为圆形*/
+    border: solid 0.125em rgba(205, 224, 230, 0.5); /*设置边框*/
+    box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/
+}
+
+#text{
+    text-align: center;
+    font-size: 14px;
+
+    position: relative;
+
+}
+.line{
+    position: absolute;
+
+    bottom:-127px;
+    right: 20px;
+}
+
+.leftLine{
+    position: absolute;
+    left: -60px;
+    width:34px;
+    height: 300px;
+    border-radius: 10px;
+    border:none;
+    display: flex;
+    background-color: #131d35;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 10px;
+    align-items: center;
+}
+
+.leftLine>li{
+    width: 25px;
+    height: 25px;
+    margin-bottom: 10px;
+    border-radius:5px ;
+    cursor: pointer;
+}
+.lightblue{
+    background-color: #4efcb6;
+}
+.purple{
+    background-color: #f64ee0;
+}
+.red{
+    background-color: #da3d32;
+}
+.yellow{
+    background-color: #f2fd43;
+}

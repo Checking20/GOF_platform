@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>作品详细界面</title>
     <link rel="stylesheet" href="style/work.css">
+    <link rel="stylesheet" href="style/game.css">
 
 </head>
 
@@ -16,16 +17,29 @@
         <div class="work">
             <div class="left">
                 <p class="title">大概或许可能这就是强吧</p>
-                <div class="show"></div>
+
+                <div class="show" id="game">
+                    <div class="leftLine" id="leftLine">
+                        <li class="lightblue"></li>
+                        <li class="purple"></li>
+                        <li class="red"></li>
+                        <li class="yellow"></li>
+                    </div>
+
+                    <div class="line">
+                        <input type="range" id="range" value="500" min="200" max="2000" />
+                        <p id="text">速度:</p>
+                    </div>
+                </div>
+
+
+
                 <div class="control">
-                    <span class="start">开始</span>
-                    <span class="reset">重置</span>
+                    <span class="start" id="start">开始</span>
+                    <span class="reset" id="clear">重置</span>
                     <span class="gene_gif">生成GIF</span>
                 </div>
-                <div class="speed">
-                    <span>1x</span>
-                    <input id="speed_control" type="range" value="1" max="4" min="0.5" step="0.5" />
-                </div>
+
 
             </div>
             <div class="right">
@@ -115,8 +129,9 @@
 
     </div>
     <script src="./js/jquery-3.1.1.min.js"></script>
-    <script src="./js/common.js"></script>
-    <script src="js/work.js"></script>
+    <!--<script src="./js/common.js"></script>-->
+    <!--<script src="js/work.js"></script>-->
+    <script src="js/game.js"></script>
 </body>
 
 </html>
