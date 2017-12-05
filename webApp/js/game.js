@@ -55,6 +55,8 @@ document.getElementById('game').onclick=function (e) {
     }
 }
 
+
+
 function outPut() {
     var selected=document.querySelectorAll('.active');
     var numAns=[];
