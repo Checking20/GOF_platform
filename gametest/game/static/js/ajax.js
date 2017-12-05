@@ -9,17 +9,21 @@ document.getElementById('upload').onclick=function () {
             break
         }
     }
-    if(bool){
+    //paintArr = [1,2,3,4,5,6,7,8];
+    if(paintArr==[]||bool){
         alert('wrong')
     }else {
         $.ajax({
-            url:prefix+'/AddMap/',
+            //url:prefix+'/AddMap/',
+            url:'/AddMap/',
             type:'POST',
-            // data:JSON.stringify({userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'}),
-            data:{userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'},
+            traditional: true,
+            data:{"mapContent": paintArr},
             dataType:'JSON',
             success:function (data) {
-                console.log(data);
+                console.log(paintArr);
+                console.log(1111);
+                console.log(data.data.username);
             },
             error:function (data) {
                 console.log(data);
@@ -27,15 +31,16 @@ document.getElementById('upload').onclick=function () {
         })
     }
 
-    console.log(JSON.stringify({userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'}))
+    console.log
 }
 
 document.getElementById('get').onclick=function () {
     $.ajax({
-        url:prefix+'/getMapDetail/',
-        type:'post',
-        dataType:'json',
-        data:JSON.stringify({mapId:0}),
+        //url:prefix+'/getMapDetail/',
+        url:'/getMapDetail/',
+        type:'POST',
+        dataType:'JSON',
+        data:{"mapid": 123},
         success:function (data) {
             console.log(data);
         },
