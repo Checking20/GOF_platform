@@ -4,18 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width" />
     <title>Title</title>
-    <link rel="stylesheet" href="/statics/style/game.css">
-    <script src="/statics/js/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" href="statics/css/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="statics/css/game.css">
+
+    <script src="statics/js/jquery-3.1.1.min.js"></script>
+    <script src="statics/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="game" id="game"></div>
+    <div class="top">
+        <p>GameLife</p>
+    </div>
 
-    <button id="evolve">演变</button>
-    <button id="upload">上传</button>
-    <button id="get">获取</button>
-    <input type="range" id="range" value="500" min="200" max="2000" />
-    <p id="text">速度:</p>
-    <script src="/statics/js/game.js"></script>
-    <script src="/statics/js/ajax.js"></script>
+
+    <div class="game" id="game">
+        <div class="leftLine" id="leftLine">
+            <li class="lightblue"></li>
+            <li class="purple"></li>
+            <li class="red"></li>
+            <li class="yellow"></li>
+        </div>
+
+        <div class="line">
+            <input type="range" id="range" value="500" min="200" max="2000" />
+            <p id="text">速度:</p>
+        </div>
+    </div>
+    <div class="buttonGroup btn-group">
+        <button class="btn btn-default col-xs-4" id="evolve">演变</button>
+        <button class="btn btn-default col-xs-4" id="upload">上传</button>
+        <button class="btn btn-default col-xs-4" id="get">获取</button>
+    </div>
+
+
+
+    <script src="statics/js/game.js"></script>
+    <script src="statics/js/ajax.js"></script>
 </body>
 </html>                              
