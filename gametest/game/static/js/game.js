@@ -1,13 +1,14 @@
 
-
 var rows=20;
 var cols=20;
-var paintArr=[];
-for(var i=0;i<rows*cols;i++){
-    paintArr[i]=0;
-}
+var paintArr=[0,0,0,0,0,0,0,0,2,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,2,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,2,0,2,2,1,1,2,2,0,2,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,2,2,1,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,1,2,1,0,0,0,0,0,0,0,0,1,2,1,0,0,0,0,0,0,2,2,1,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,2,1,2,2,0,0,0,0,0,0,2,2,1,2,0,0,0,0,0,1,0,1,2,0,0,0,0,0,0,0,0,2,1,0,1,0,0,0,0,0,2,1,2,2,2,0,0,0,0,2,2,2,1,2,0,0,0,0,0,1,0,1,2,0,0,0,0,0,0,0,0,2,1,0,1,0,0,0,0,0,2,1,2,2,0,0,0,0,0,0,2,2,1,2,0,0,0,0,0,0,2,2,1,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,1,2,1,0,0,0,0,0,0,0,0,1,2,1,0,0,0,0,0,0,2,2,1,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,2,0,2,2,1,1,2,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,2,0,2,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+// for(var i=0;i<rows*cols;i++){
+//     paintArr[i]=0;
+// }
+
 var colorState=1;
 init();
+paint(paintArr);
 var state=0;
 function init() {
     document.getElementById('text').innerText='速度: '+document.getElementById('range').value+'ms';
@@ -29,89 +30,17 @@ function init() {
     console.log(docFrag);
 }
 
-document.getElementById('game').onclick=function (e) {
-
-    if(e.target.nodeName.toLowerCase()==='li'&&e.target.getAttribute('num')!=undefined){
-        if(e.target.className==''){
-            switch (colorState){
-                case 1:
-                    e.target.className='active lightblue';
-                    break;
-                case 2:
-                    e.target.className='active purple';
-                    break;
-                case 3:
-                    e.target.className='active red';
-                    break;
-                case 4:
-                    e.target.className='active yellow';
-                    break;
-            }
-
-            paintArr[e.target.getAttribute('num')]=1;
-        }else {
-            e.target.className='';
-            paintArr[e.target.getAttribute('num')]=0;
-        }
-    }
-}
-
-
-function onMouseOver(e) {
-    if(e.target.nodeName.toLowerCase()==='li'&&e.target.getAttribute('num')!=undefined){
-        if(e.target.className==''){
-            switch (colorState){
-                case 1:
-                    e.target.className='active lightblue';
-                    break;
-                case 2:
-                    e.target.className='active purple';
-                    break;
-                case 3:
-                    e.target.className='active red';
-                    break;
-                case 4:
-                    e.target.className='active yellow';
-                    break;
-            }
-            paintArr[e.target.getAttribute('num')]=1;
-        }
-    }
-}
-
-
-document.getElementsByTagName('body')[0].onmouseup=function () {
-    document.getElementById('game').removeEventListener('mouseover',onMouseOver,false);
-}
-
-document.getElementsByTagName('body')[0].ondragover=function () {
-    document.getElementById('game').removeEventListener('mouseover',onMouseOver,false);
-}
-
-document.getElementsByTagName('body')[0].onmousedown=function () {
-
-    document.getElementById('game').addEventListener('mouseover',onMouseOver,false);
-}
-
-// function outPut() {
-//     var selected=document.querySelectorAll('.active');
-//     var numAns=[];
-//     for(var i=0;i<selected.length;i++){
-//         numAns.push(selected[i].getAttribute('num'));
-//     }
-//     return numAns;
-// }
 
 var timeId;
 
-document.getElementById('evolve').onclick=function (e) {
+document.getElementById('start').onclick=function (e) {
     if(e.target.innerText=='演变'){
         timeId=setInterval('evolve()',document.getElementById('range').value);
-        document.getElementById('evolve').innerText='暂停';
+        document.getElementById('start').innerText='暂停';
         state=1;
     }else {
         clearInterval(timeId);
-        document.getElementById('evolve').innerText='演变';
+        document.getElementById('start').innerText='演变';
         state=0;
     }
 
@@ -170,6 +99,8 @@ function evolve() {
     paint(paintArr);
 }
 
+
+
 function paint(arr) {
     var selected=document.querySelectorAll('#game>li');
     for(var i=0;i<arr.length;i++){
@@ -190,10 +121,8 @@ function paint(arr) {
                     selected[i].className='active yellow';
                     break;
             }
-
         }
     }
-    console.log('paint');
 }
 
 
@@ -235,14 +164,15 @@ document.getElementById('leftLine').onclick=function (e) {
 }
 
 document.getElementById('clear').onclick=function () {
-    for(var i=0;i<rows*cols;i++){
-        paintArr[i]=0;
+    for (var i = 0; i < rows * cols; i++) {
+        paintArr[i] = 0;
     };
     paint(paintArr);
-    if(state==1){
+    if (state == 1) {
 
-        state=0;
+        state = 0;
         clearInterval(timeId);
-        document.getElementById('evolve').innerText='演变';
+        document.getElementById('evolve').innerText = '演变';
+
     }
 }
