@@ -57,8 +57,10 @@ window.onload = function () {
         var myTarget = $(e.target);
         var mapId = myTarget.attr("class").split(" ")[1];
         if(myTarget.attr("class").split(" ")[0]=="work"){
-            location.href='./work.html';
+            window.location.href='./work.html';
             common.workInterfaceMapId = mapId; //记录mapId
         }
     })
 }
+
+// var work=document.querySelectorAll('.work');

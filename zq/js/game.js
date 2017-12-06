@@ -1,12 +1,14 @@
 
 var rows=20;
 var cols=20;
-var paintArr=[];
-for(var i=0;i<rows*cols;i++){
-    paintArr[i]=0;
-}
+var paintArr=[0,0,0,0,0,0,0,0,2,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,2,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,2,0,2,2,1,1,2,2,0,2,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,2,2,1,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,1,2,1,0,0,0,0,0,0,0,0,1,2,1,0,0,0,0,0,0,2,2,1,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,2,1,2,2,0,0,0,0,0,0,2,2,1,2,0,0,0,0,0,1,0,1,2,0,0,0,0,0,0,0,0,2,1,0,1,0,0,0,0,0,2,1,2,2,2,0,0,0,0,2,2,2,1,2,0,0,0,0,0,1,0,1,2,0,0,0,0,0,0,0,0,2,1,0,1,0,0,0,0,0,2,1,2,2,0,0,0,0,0,0,2,2,1,2,0,0,0,0,0,0,2,2,1,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,1,2,1,0,0,0,0,0,0,0,0,1,2,1,0,0,0,0,0,0,2,2,1,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,2,0,2,2,1,1,2,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,2,0,2,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+// for(var i=0;i<rows*cols;i++){
+//     paintArr[i]=0;
+// }
+
 var colorState=1;
 init();
+paint(paintArr);
 var state=0;
 function init() {
     document.getElementById('text').innerText='速度: '+document.getElementById('range').value+'ms';
@@ -34,11 +36,11 @@ var timeId;
 document.getElementById('start').onclick=function (e) {
     if(e.target.innerText=='演变'){
         timeId=setInterval('evolve()',document.getElementById('range').value);
-        document.getElementById('evolve').innerText='暂停';
+        document.getElementById('start').innerText='暂停';
         state=1;
     }else {
         clearInterval(timeId);
-        document.getElementById('evolve').innerText='演变';
+        document.getElementById('start').innerText='演变';
         state=0;
     }
 
