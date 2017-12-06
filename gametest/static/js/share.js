@@ -55,7 +55,7 @@ window.onload = function () {
         var myTarget = $(event.target);
         var mapId = myTarget.attr("class").split(" ")[1];
         if(myTarget.attr("class").split(" ")[0]=="work"){
-            location.href='./work.html';
+            window.location.href='./work.html';
             common.workInterfaceMapId = mapId; //记录mapId
             
         }
