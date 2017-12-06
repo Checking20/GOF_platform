@@ -171,19 +171,24 @@ def getStateDetail(request):
             state = models.State.objects.filter(id=stateid)
             if state:
                 for st in state:
-                    temp1 = st
+                    temp1 = st.Map_ID
             else:
                 return HttpResponse(json.dumps({'data': {'flag': False, 'state': None}}))
+            commentnames = []
+            commentcontents = []
             comment = models.Comment.objects.filter(State_ID=stateid)
             if comment:
                 for cc in comment:
-                    temp2 = cc
-            else:
-                temp2 = None
-            mapp = getMap(temp1.Map_ID)
+                    commentnames.append(cc.Comment_User_name)
+                    commentcontents.append(cc.content)
+
+            mapp = getMap(temp1)
             return HttpResponse(json.dumps({'data': {"flag": True, 'statedetail': {'state': temp1,
                                                                                    'map_content': mapp.Content,
-                                                                                   'comment': temp2}}}))
+                                                                                   'comment': {
+                                                                                       'commentnames': commentnames,
+                                                                                       'commentcontents':
+                                                                                           commentcontents}}}}))
 
         except:
             return HttpResponse(json.dumps({'data': {'flag': False}}))
@@ -272,19 +277,17 @@ def getWorks(request):
             # #     print("error")
             # #     return HttpResponse(json.dumps({'data': {'flag': False}}))
             state_list = models.State.objects.all().order_by('-Like')
-            names = []
+            user_names = []
             ids = []
-            contents = []
+            state_names = []
             for state in state_list:
-                mapps = getMap(state.Map_ID)
-                for mapp in mapps:
-                    names.append(state.User_name)
-                    ids.append(state.Map_ID)
-                    contents.append(mapp.Content)
+                user_names.append(state.User_name)
+                ids.append(state.id)
+                state_names.append(state.State_name)
             print(ids)
-            print(contents)
+            #print(contents)
             return HttpResponse(
-                json.dumps({'data': {"flag": True, "state_list": ids, "map_content": contents, 'usernames': names}}))
+                json.dumps({'data': {"flag": True, "state_list": ids, "state_names": state_names, 'user_names': user_names}}, ensure_ascii = False))
         #最近热门（待完成）
         if type == "recent_hot":
             #TODO LIST
@@ -298,19 +301,18 @@ def getWorks(request):
             # except:
             #     return HttpResponse(json.dumps({'data': {'flag': False}}))
             state_list = models.State.objects.all().order_by('-Timestamp')
-            names = []
+            user_names = []
             ids = []
-            contents = []
+            state_names = []
             for state in state_list:
-                mapps = getMap(state.Map_ID)
-                for mapp in mapps:
-                    names.append(state.User_name)
-                    ids.append(state.Map_ID)
-                    contents.append(mapp.Content)
+                user_names.append(state.User_name)
+                ids.append(state.id)
+                state_names.append(state.State_name)
             print(ids)
-            print(contents)
+            #print(contents)
             return HttpResponse(
-                json.dumps({'data': {"flag": True, "state_list": ids, "map_content": contents, 'usernames': names}}))
+                json.dumps(
+                    {'data': {"flag": True, "state_list": ids, "state_names": state_names, 'user_names': user_names}}, ensure_ascii = False))
         #最早
         if type == "lastly":
             # try:
@@ -320,19 +322,18 @@ def getWorks(request):
             # except:
             #     return HttpResponse(json.dumps({'data': {'flag': False}}))
             state_list = models.State.objects.all().order_by('Timestamp')
-            names = []
+            user_names = []
             ids = []
-            contents = []
+            state_names = []
             for state in state_list:
-                mapps = getMap(state.Map_ID)
-                for mapp in mapps:
-                    names.append(state.User_name)
-                    ids.append(state.Map_ID)
-                    contents.append(mapp.Content)
+                user_names.append(state.User_name)
+                ids.append(state.id)
+                state_names.append(state.State_name)
             print(ids)
-            print(contents)
+            #print(contents)
             return HttpResponse(
-                json.dumps({'data': {"flag": True, "state_list": ids, "map_content": contents, 'usernames': names}}))
+                json.dumps(
+                    {'data': {"flag": True, "state_list": ids, "state_names": state_names, 'user_names': user_names}}, ensure_ascii = False))
 
 def testhhh():
     mapid = 44587545
