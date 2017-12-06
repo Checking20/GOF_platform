@@ -16,7 +16,7 @@
     </div>
 
 
-    <div class="game" id="game">
+    <div class="game"  id="game">
         <div class="leftLine" id="leftLine">
             <li class="lightblue"></li>
             <li class="purple"></li>
@@ -30,12 +30,44 @@
         </div>
     </div>
     <div class="buttonGroup btn-group">
-        <button class="btn btn-default col-xs-4" id="evolve">演变</button>
-        <button class="btn btn-default col-xs-4" id="upload">上传</button>
-        <button class="btn btn-default col-xs-4" id="get">获取</button>
+        <button class="btn btn-default col-xs-3" id="evolve">演变</button>
+        <button class="btn btn-default col-xs-3" data-toggle="modal"  id="upload">上传</button>
+        <button class="btn btn-default col-xs-3" id="get">获取</button>
+        <button class="btn btn-default col-xs-3" id="clear">清空</button>
     </div>
 
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">上传信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="inputName" placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Description</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputDescription" placeholder="Description">
+                            </div>
+                        </div>
 
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="configUpload">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="/statics/js/game.js"></script>
     <script src="/statics/js/ajax.js"></script>

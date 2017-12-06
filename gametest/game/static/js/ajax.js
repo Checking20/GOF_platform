@@ -1,5 +1,32 @@
 var prefix='http://106.14.125.177';
 
+document.getElementById('configUpload').onclick=function () {
+    var name=document.getElementById('inputName').value;
+    var description=document.getElementById('inputDescription').value;
+    if(name==''||description==''){
+        alert('input error');
+    }else{
+        $.ajax({
+            url:prefix+'/AddMap/',
+            type:'POST',
+            // data:JSON.stringify({userId:1,mapContent:paintArr,mapName:'test',mapDescrition:'testDescription'}),
+            data:{userId:1,mapContent:paintArr,mapName:name,mapDescrition:description},
+            dataType:'JSON',
+            success:function (data) {
+                console.log(data);
+                $('#myModal').modal('hide');
+                alert('success');
+            },
+            error:function (data) {
+                console.log(data);
+                $('#myModal').modal('hide');
+                alert('failure');
+            }
+        })
+    }
+
+}
+
 
 document.getElementById('upload').onclick=function () {
     var bool=true;
@@ -9,38 +36,20 @@ document.getElementById('upload').onclick=function () {
             break
         }
     }
-    //paintArr = [1,2,3,4,5,6,7,8];
-    if(paintArr==[]||bool){
+    if(bool){
         alert('wrong')
     }else {
-        $.ajax({
-            //url:prefix+'/AddMap/',
-            url:'/AddMap/',
-            type:'POST',
-            traditional: true,
-            data:{"mapContent": paintArr},
-            dataType:'JSON',
-            success:function (data) {
-                console.log(paintArr);
-                console.log(1111);
-                console.log(data.data.username);
-            },
-            error:function (data) {
-                console.log(data);
-            }
-        })
-    }
+        $('#myModal').modal('show');
 
-    console.log
+    }
 }
 
 document.getElementById('get').onclick=function () {
     $.ajax({
-        //url:prefix+'/getMapDetail/',
-        url:'/getMapDetail/',
-        type:'POST',
-        dataType:'JSON',
-        data:{"mapid": 123},
+        url:prefix+'/getMapDetail/',
+        type:'post',
+        dataType:'json',
+        data:JSON.stringify({mapId:0}),
         success:function (data) {
             console.log(data);
         },
