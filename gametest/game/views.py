@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from . import models
 import json
+from django.core import serializers
 
 # Create your views here.
 # 登录
@@ -243,46 +244,95 @@ def AddLike(request):
         except:
             return HttpResponse(json.dumps({'data': {'flag': False}}))
 
+def convert_to_dicts(objs):
+    '''''把对象列表转换为字典列表'''
+    obj_arr = []
+    for o in objs:
+        # 把Object对象转换成Dict
+        dict = {}
+        dict.update(o.__dict__)
+        dict.pop("_state", None)  # 去除掉多余的字段
+        obj_arr.append(dict)
+    return obj_arr
 
-
-
-#JFK  Here
+        #JFK  Here
 @csrf_exempt
 def getWorks(request):
-    if request.method == "GET":
-        type = request.GET.get("type")
+    if request.method == "POST":
+        type = request.POST.get("password")
         #热门
         if type == "hot":
-            try:
-                state_list = models.State.objects.all().order_by('-Like')
-                mapp = getMap(state_list.Map_ID)
-                return HttpResponse(
-                    json.dumps({'data': {"flag": True, "state_list": state_list.id, "map_content": mapp.Content}}))
-            except:
-                return HttpResponse(json.dumps({'data': {'flag': False}}))
+            # # try:
+            #     state_list = serializers.serialize("json", models.State.objects.all().order_by('-Like'), ensure_ascii = False)
+            #     print(convert_to_dicts(state_list))
+            #     return HttpResponse(json.dumps({'data': convert_to_dicts(state_list)}))
+            #     return HttpResponse(
+            #         json.dumps({'data': {'flag': True, 'state_list': state_list}}))
+            # # except:
+            # #     print("error")
+            # #     return HttpResponse(json.dumps({'data': {'flag': False}}))
+            state_list = models.State.objects.all().order_by('-Like')
+            names = []
+            ids = []
+            contents = []
+            for state in state_list:
+                mapps = getMap(state.Map_ID)
+                for mapp in mapps:
+                    names.append(state.User_name)
+                    ids.append(state.Map_ID)
+                    contents.append(mapp.Content)
+            print(ids)
+            print(contents)
+            return HttpResponse(
+                json.dumps({'data': {"flag": True, "state_list": ids, "map_content": contents, 'usernames': names}}))
         #最近热门（待完成）
         if type == "recent_hot":
             #TODO LIST
             return HttpResponse(json.dumps({'data': {'flag': False}}))
         #最新
         if type == "lately":
-            try:
-                state_list = models.State.objects.all().order_by('-TimeStamp')
-                mapp = getMap(state_list.Map_ID)
-                return HttpResponse(
-                    json.dumps({'data': {"flag": True, "state_list": state_list.id, "map_content": mapp.Content}}))
-            except:
-                return HttpResponse(json.dumps({'data': {'flag': False}}))
+            # try:
+            #     state_list = serializers.serialize("json", models.State.objects.all().order_by('-Timestamp'))
+            #     return HttpResponse(
+            #         json.dumps({'data': {'flag': True, 'state_list': state_list}}))
+            # except:
+            #     return HttpResponse(json.dumps({'data': {'flag': False}}))
+            state_list = models.State.objects.all().order_by('-Timestamp')
+            names = []
+            ids = []
+            contents = []
+            for state in state_list:
+                mapps = getMap(state.Map_ID)
+                for mapp in mapps:
+                    names.append(state.User_name)
+                    ids.append(state.Map_ID)
+                    contents.append(mapp.Content)
+            print(ids)
+            print(contents)
+            return HttpResponse(
+                json.dumps({'data': {"flag": True, "state_list": ids, "map_content": contents, 'usernames': names}}))
         #最早
         if type == "lastly":
-            try:
-                state_list = models.State.objects.all().order_by('TimeStamp')
-                mapp = getMap(state_list.Map_ID)
-                return HttpResponse(
-                    json.dumps({'data': {"flag": True, "state_list": state_list.id, "map_content": mapp.Content}}))
-            except:
-                return HttpResponse(json.dumps({'data': {'flag': False}}))
-
+            # try:
+            #     state_list = serializers.serialize("json", models.State.objects.all().order_by('+Timestamp'))
+            #     return HttpResponse(
+            #         json.dumps({'data': {'flag': True, 'state_list': state_list}}))
+            # except:
+            #     return HttpResponse(json.dumps({'data': {'flag': False}}))
+            state_list = models.State.objects.all().order_by('Timestamp')
+            names = []
+            ids = []
+            contents = []
+            for state in state_list:
+                mapps = getMap(state.Map_ID)
+                for mapp in mapps:
+                    names.append(state.User_name)
+                    ids.append(state.Map_ID)
+                    contents.append(mapp.Content)
+            print(ids)
+            print(contents)
+            return HttpResponse(
+                json.dumps({'data': {"flag": True, "state_list": ids, "map_content": contents, 'usernames': names}}))
 
 def testhhh():
     mapid = 44587545
@@ -299,21 +349,19 @@ def testhhh():
     # models.State.objects.create(User_name=username, Map_ID=mapid, Description=description, State_name=statename)
     # models.Comment.objects.create(State_ID=stateid, Comment_User_name=username, content=content)
     # models.State.objects.filter(id=stateid).update(Like=likenumber)
-    state_list = models.State.objects.all().order_by('-Like')
-    mapp = getMap(state_list.Map_ID)
-    state = models.Comment.objects.filter(State_ID=stateid)
-    if mapp:
-        for use in mapp:
-            re = use
-        return re
-    else:
-        return True
+    state_list = serializers.serialize("json", models.State.objects.all().order_by('-Like'))
+
+    return state_list
+    # state = models.Comment.objects.filter(State_ID=stateid)
+    # return True
     # print(comment.Comment_User_name)
 
 
 def test(request):
     abc = testhhh()
-    return HttpResponse(json.dumps({'data': {'flag': abc.Content}}))
+    # result = eval(repr(abc))
+    # abcc = json.dumps(abc)
+    return HttpResponse(json.dumps({'data': {'flag': abc}}))
 
 
 
