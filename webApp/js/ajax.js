@@ -60,5 +60,5 @@ document.getElementById('get').onclick=function () {
     })
 
     console.log({mapId:12341234});
-    console.log()
+   
 }

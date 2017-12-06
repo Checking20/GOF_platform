@@ -97,6 +97,8 @@ function evolve() {
     paint(paintArr);
 }
 
+
+
 function paint(arr) {
     var selected=document.querySelectorAll('#game>li');
     for(var i=0;i<arr.length;i++){
@@ -117,7 +119,6 @@ function paint(arr) {
                     selected[i].className='active yellow';
                     break;
             }
-
         }
     }
 }
@@ -163,8 +164,7 @@ document.getElementById('leftLine').onclick=function (e) {
 document.getElementById('clear').onclick=function () {
     for (var i = 0; i < rows * cols; i++) {
         paintArr[i] = 0;
-    }
-    ;
+    };
     paint(paintArr);
     if (state == 1) {
 
