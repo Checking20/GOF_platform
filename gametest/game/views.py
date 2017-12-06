@@ -167,31 +167,56 @@ def AddComment(request):
 def getStateDetail(request):
     if request.method == "POST":
         stateid = request.POST.get("stateid", None)
-        try:
-            state = models.State.objects.filter(id=stateid)
-            if state:
-                for st in state:
-                    temp1 = st.Map_ID
-            else:
-                return HttpResponse(json.dumps({'data': {'flag': False, 'state': None}}))
-            commentnames = []
-            commentcontents = []
-            comment = models.Comment.objects.filter(State_ID=stateid)
-            if comment:
-                for cc in comment:
-                    commentnames.append(cc.Comment_User_name)
-                    commentcontents.append(cc.content)
+        print(stateid)
+        # try:
+        #     state = models.State.objects.filter(id=stateid)
+        #     if state:
+        #         for st in state:
+        #             temp1 = st.Map_ID
+        #     else:
+        #         return HttpResponse(json.dumps({'data': {'flag': False, 'state': None}}))
+        #     commentnames = []
+        #     commentcontents = []
+        #     comment = models.Comment.objects.filter(State_ID=stateid)
+        #     if comment:
+        #         for cc in comment:
+        #             commentnames.append(cc.Comment_User_name)
+        #             commentcontents.append(cc.content)
+        #
+        #     mapp = getMap(temp1)
+        #     return HttpResponse(json.dumps({'data': {"flag": True, 'statedetail': {'state': temp1,
+        #                                                                            'map_content': mapp.Content,
+        #                                                                            'comment': {
+        #                                                                                'commentnames': commentnames,
+        #                                                                                'commentcontents':
+        #                                                                                    commentcontents}}}}))
+        #
+        # except:
+        #     return HttpResponse(json.dumps({'data': {'flag': False}}))
+        state = models.State.objects.filter(id=stateid)
+        if state:
+            for st in state:
+                temp1 = st.Map_ID
+        else:
+            return HttpResponse(json.dumps({'data': {'flag': False, 'state': None}}))
+        commentnames = []
+        commentcontents = []
+        comment = models.Comment.objects.filter(State_ID=stateid)
+        if comment:
+            for cc in comment:
+                commentnames.append(cc.Comment_User_name)
+                commentcontents.append(cc.content)
 
-            mapp = getMap(temp1)
-            return HttpResponse(json.dumps({'data': {"flag": True, 'statedetail': {'state': temp1,
-                                                                                   'map_content': mapp.Content,
-                                                                                   'comment': {
-                                                                                       'commentnames': commentnames,
-                                                                                       'commentcontents':
-                                                                                           commentcontents}}}}))
-
-        except:
-            return HttpResponse(json.dumps({'data': {'flag': False}}))
+        mapp = getMap(temp1)
+        if mapp:
+            for tmp in mapp:
+                content = tmp.Content
+        return HttpResponse(json.dumps({'data': {"flag": True, 'statedetail': {'state': temp1,
+                                                                               'map_content': content,
+                                                                               'comment': {
+                                                                                   'commentnames': commentnames,
+                                                                                   'commentcontents':
+                                                                                       commentcontents}}}}, ensure_ascii=False))
 
 # 发表新动态
 @csrf_exempt
