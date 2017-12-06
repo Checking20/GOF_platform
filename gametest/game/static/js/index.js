@@ -50,7 +50,7 @@
     //点击works和begin跳转时
     $(".works").click(function(){
         if(manager.isLogin||manager.isRegister){
-            location.href='./share.html';
+            location.href='./share/';
         }
         else{
             alert("请先登录");
@@ -58,7 +58,7 @@
     });
     $(".begin").click(function(){
         if(manager.isLogin||manager.isRegister){
-            location.href='./begin.html';
+            location.href='./begin/';
         }
         else{
             alert("请先登录");
