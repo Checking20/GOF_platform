@@ -11,13 +11,14 @@
  //一个map要有所属用户  还有相关评论的所属用户
 (function(){
     // manager
+    var prefix = 'http://106.14.125.177';    
     var manager = {
         mapId,//当前作品的id
         init:function(mapId){
             manager.mapId = mapId;
             $.ajax({
                 type: "POST",
-                url: "/getMap",
+                url: prefix + "/getStateDetail/",
                 data: { "mapId":mapId },
                 dataType: 'json',
                 success: function (myData) {
@@ -70,7 +71,7 @@
             $.ajax({
                 type: "POST",
                 url: "/addComment",
-                data: { "comment":comment,"uesrName":user.name },
+                data: { "comment":comment,"uesrname":common.username},
                 dataType: 'json',
                 success: function (myData) {
                    if(myData.data.flag){

@@ -1,17 +1,17 @@
 window.onload = function () {
     var works = $(".works");
+    var prefix = 'http://106.14.125.177';
     var contents = [1, 2, 3, 4, 5, 6, 7];
 
     //得到某一栏目下的所有作品
     function getWorks(type) {
         works.empty();//删除上次加载的works
         $.ajax({
-            type: "GET",
-            url: "/getWorks",
+            type: "POST",
+            url: prefix + "/getWorks/",
             data: { "type": type },
             dataType: 'json',
             success: function (myData) {
-                //此处返回的是对应type的works的列表 自取需要多少个
                 myData.data.forEach(function (item, index, arr) {
                     addWork(item);
                 })
@@ -26,7 +26,7 @@ window.onload = function () {
     //添加一个作品
     function addWork(content) {
         var work = document.createElement("div");
-        work.className = "work"+" " + content.mapId;
+        work.className = "work"+" " + content.stateid;
         work.innerHTML = content;
         works.append(work);
     }
@@ -35,6 +35,7 @@ window.onload = function () {
     function init() {
         getWorks("hot");
     }
+    // init();
     //测试代码
     contents.forEach(function (item, index, arr) {
         addWork(item);
@@ -53,12 +54,11 @@ window.onload = function () {
 
     //点击某个作品跳转到该作品详细界面
     works.click(function(e){
-        var myTarget = $(event.target);
+        var myTarget = $(e.target);
         var mapId = myTarget.attr("class").split(" ")[1];
         if(myTarget.attr("class").split(" ")[0]=="work"){
             location.href='./work.html';
             common.workInterfaceMapId = mapId; //记录mapId
-            
         }
     })
 }

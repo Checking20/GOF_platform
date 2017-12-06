@@ -1,6 +1,4 @@
 (function () {
-
-
     var loginButton = $(".loginButton");
     var bgDiv = $(".bg");
     var login_register = $(".login_register");
@@ -11,14 +9,14 @@
     var username; //用户名
     var password; //密码
 
-
+    var prefix = 'http://106.14.125.177'
     //得到输入框中的用户和密码
     usernameInput.change(function(){
        username =  usernameInput.val();
     })
     passwordInput.change(function(){
        password =  passwordInput.val();
-    })
+     })
 
     //点击右上角登录框后弹出模态框和背景
     loginButton.click(function(){
@@ -31,6 +29,7 @@
         manager.login(username,password);
         console.log(username);
         console.log(password);
+        
         if(manager.isLogin){
             login_register.css("display","none");        
             bgDiv.css("display","none");
@@ -40,12 +39,10 @@
     });
     register.click(function(){
         manager.register(username,password);
-        console.log(username);
-        console.log(password);
         if(manager.register){
             login_register.css("display","none");        
             bgDiv.css("display","none");
-            loginButton.html(username);
+            loginButton.html(username); 
             common.username = username; //记录用户名
         }
     });
@@ -53,7 +50,7 @@
     //点击works和begin跳转时
     $(".works").click(function(){
         if(manager.isLogin||manager.isRegister){
-            location.href='./share';
+            location.href='./share.html';
         }
         else{
             alert("请先登录");
@@ -61,7 +58,7 @@
     });
     $(".begin").click(function(){
         if(manager.isLogin||manager.isRegister){
-            location.href='./begin';
+            location.href='./begin.html';
         }
         else{
             alert("请先登录");
@@ -71,17 +68,15 @@
     //实际控制登录和注册的manager对象
     var manager = {
         isLogin: false,
-        isRegister:true,
+        isRegister:false,
         login: function (username, password) {
             $.ajax({
                 type: "POST",
-                url: "/login/",
+                url: prefix + "/login/",
                 data: { "username": username, "password": password },
                 dataType: 'json',
-                //async:false, //同步请求
+                async:false, //同步请求
                 success: function (myData) {
-                    //console.log(myData.data);
-                    alert(myData.data.flag);
                     manager.isLogin = myData.data.flag;
                     if (manager.isLogin) {
                         alert("登录成功");
@@ -97,15 +92,15 @@
         register: function (username, password) {
             $.ajax({
                 type: "POST",
-                url: "/register/",
+                url: prefix+"/register/",
                 data: { "username": username, "password": password },
-                dataType: 'json',
+                dataType: 'json                     ',
                 async:false, //同步请求
                 success: function (myData) {
-                    if (myData.data.flag) {
+                    manager.isRegister = myData.data.flag;
+                    if (manager.isRegister) {
                         alert("注册成功");
                     }
-
                 },
                 error: function (xhr, type) {
                     console.log(type);
